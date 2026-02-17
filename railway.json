@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "startCommand": "npm run start",
+  "environmentVariables": {
+    "NODE_ENV": "production",
+    "NEXT_PUBLIC_API_URL": "${{ RAILWAY_DEPLOYMENT_URL }}"
+  },
+  "deploy": {
+    "restartPolicy": "on-failure",
+    "maxInstances": 1
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "nodeVersion": "18.x",
+  "env": [
+    {
+      "key": "DB_HOST",
+      "value": "",
+      "type": "encrypted"
+    },
+    {
+      "key": "DB_PORT",
+      "value": "5432",
+      "type": "plaintext"
+    },
+    {
+      "key": "DB_NAME",
+      "value": "book_review",
+      "type": "plaintext"
+    },
+    {
+      "key": "DB_USER",
+      "value": "postgres",
+      "type": "plaintext"
+    },
+    {
+      "key": "DB_PASSWORD",
+      "value": "",
+      "type": "encrypted"
+    },
+    {
+      "key": "NEXT_PUBLIC_API_URL",
+      "value": "",
+      "type": "plaintext"
+    }
+  ],
+  "functions": {
+    "api/**/*.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "regions": ["iad1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

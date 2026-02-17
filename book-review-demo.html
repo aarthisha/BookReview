@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookReview - Share Your Reading Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            color: #2563eb;
+            font-size: 1.8rem;
+        }
+
+        nav button {
+            padding: 0.6rem 1.2rem;
+            margin-left: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav button:first-of-type {
+            background: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        nav button:first-of-type:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        nav button:last-of-type {
+            background: #2563eb;
+            color: white;
+        }
+
+        nav button:last-of-type:hover {
+            background: #1e40af;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-secondary:hover {
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 5rem 2rem;
+            background: #f9fafb;
+        }
+
+        .reviews .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reviews h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 3rem;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .book-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .author {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            color: #fbbf24;
+            font-size: 1.2rem;
+        }
+
+        .reviewer {
+            color: #4b5563;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .review-date {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .stats .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item h4 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: #93c5fd;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: #1f2937;
+            font-size: 1.8rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #1f2937;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .form-actions button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #1e40af;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+        .rating-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .rating-group input[type="radio"] {
+            display: none;
+        }
+
+        .rating-star {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #d1d5db;
+            transition: color 0.2s ease;
+        }
+
+        .rating-group input[type="radio"]:checked ~ .rating-star,
+        .rating-star:hover {
+            color: #fbbf24;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav button {
+                margin-left: 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <h1>📚 BookReview</h1>
+            <div>
+                <button>Sign In</button>
+                <button>Sign Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Share Your Reading Journey</h2>
+            <p>Discover great books, write thoughtful reviews, and connect with readers who share your passion for literature.</p>
+            <div class="buttons">
+                <button class="btn btn-primary">Explore Reviews</button>
+                <button class="btn btn-secondary" onclick="openReviewForm()">Write a Review</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h3>Why Join BookReview?</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h4>Rate & Review</h4>
+                    <p>Share your honest thoughts about books you love and help others discover great reads.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h4>Discover</h4>
+                    <p>Find your next favorite book from community recommendations and curated lists.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>Connect</h4>
+                    <p>Join a vibrant community of passionate readers and discuss your favorite books.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Reviews -->
+    <section class="reviews">
+        <div class="container">
+            <h3>Latest Reviews</h3>
+            <div class="review-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="book-title">The Midnight Library</div>
+                            <div class="author">by Matt Haig</div>
+                        </div>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                    <div class="reviewer">Sarah Mitchell</div>
+                    <p class="review-text">An absolutely captivating read! This book explores the beauty of life's choices and the paths we didn't take. Perfect for anyone looking for inspiration and comfort.</p>
+                    <div class="review-date">2 days ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="book-title">Dune</div>
+                            <div class="author">by Frank Herbert</div>
+                        </div>
+                        <div class="rating">★★★★☆</div>
+                    </div>
+                    <div class="reviewer">James Chen</div>
+                    <p class="review-text">A masterpiece of science fiction! The world-building is incredible, though the first half can be dense. Worth every page of the journey.</p>
+                    <div class="review-date">5 days ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="book-title">Where the Crawdads Sing</div>
+                            <div class="author">by Delia Owens</div>
+                        </div>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                    <div class="reviewer">Emma Rodriguez</div>
+                    <p class="review-text">Hauntingly beautiful and impossible to put down. A story about resilience, nature, and human connection that will stay with you long after you finish.</p>
+                    <div class="review-date">1 week ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="book-title">The Seven Husbands of Evelyn Hugo</div>
+                            <div class="author">by Taylor Jenkins Reid</div>
+                        </div>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                    <div class="reviewer">Michael Park</div>
+                    <p class="review-text">Addictive, glamorous, and deeply moving. A page-turner about ambition, love, and secrets in old Hollywood. Highly recommend!</p>
+                    <div class="review-date">1 week ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="book-title">Atomic Habits</div>
+                            <div class="author">by James Clear</div>
+                        </div>
+                        <div class="rating">★★★★☆</div>
+                    </div>
+                    <div class="reviewer">Lisa Thompson</div>
+                    <p class="review-text">Practical and actionable. Great insights on building better habits through small changes. A must-read for personal development.</p>
+                    <div class="review-date">2 weeks ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="book-title">Educated</div>
+                            <div class="author">by Tara Westover</div>
+                        </div>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                    <div class="reviewer">David Kumar</div>
+                    <p class="review-text">A powerful memoir about the transformative power of education. Incredibly inspiring and thought-provoking. One of the best books I've read.</p>
+                    <div class="review-date">2 weeks ago</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>50K+</h4>
+                    <p>Active Readers</p>
+                </div>
+                <div class="stat-item">
+                    <h4>150K+</h4>
+                    <p>Books Reviewed</p>
+                </div>
+                <div class="stat-item">
+                    <h4>500K+</h4>
+                    <p>Total Reviews</p>
+                </div>
+                <div class="stat-item">
+                    <h4>4.8★</h4>
+                    <p>Average Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 BookReview. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- Write Review Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Write a Review</h2>
+                <button class="close-btn" onclick="closeReviewForm()">&times;</button>
+            </div>
+            <form onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label for="bookTitle">Book Title *</label>
+                    <input type="text" id="bookTitle" name="bookTitle" required placeholder="Enter the book title">
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author *</label>
+                    <input type="text" id="author" name="author" required placeholder="Enter the author name">
+                </div>
+
+                <div class="form-group">
+                    <label for="genre">Genre</label>
+                    <select id="genre" name="genre">
+                        <option value="">Select a genre</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="science-fiction">Science Fiction</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="biography">Biography</option>
+                        <option value="self-help">Self-Help</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating *</label>
+                    <div class="rating-group">
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" class="rating-star">★</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" class="rating-star">★</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" class="rating-star">★</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" class="rating-star">★</label>
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5" class="rating-star">★</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewText">Your Review *</label>
+                    <textarea id="reviewText" name="reviewText" required placeholder="Share your thoughts about this book..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeReviewForm()">Cancel</button>
+                    <button type="submit" class="btn-submit">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openReviewForm() {
+            document.getElementById('reviewModal').classList.add('show');
+        }
+
+        function closeReviewForm() {
+            document.getElementById('reviewModal').classList.remove('show');
+            document.getElementById('reviewForm').reset();
+        }
+
+        async function submitReview(event) {
+            event.preventDefault();
+            
+            const bookTitle = document.getElementById('bookTitle').value;
+            const author = document.getElementById('author').value;
+            const genre = document.getElementById('genre').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const reviewText = document.getElementById('reviewText').value;
+
+            // Create review data object
+            const reviewData = {
+                bookTitle,
+                author,
+                genre,
+                rating: parseInt(rating),
+                reviewText
+            };
+
+            try {
+                // Send data to API endpoint
+                const response = await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(reviewData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('Review saved to database:', result.data);
+                    alert(`Thank you for your review of "${bookTitle}"! Your review has been saved successfully.`);
+                    closeReviewForm();
+                } else {
+                    alert('Error saving review: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                alert('Failed to submit review. Please try again.');
+            }
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('reviewModal');
+            if (event.target === modal) {
+                closeReviewForm();
+            }
+        }
+    </script>
+</body>
+</html>
